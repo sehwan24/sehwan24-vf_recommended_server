@@ -15,12 +15,12 @@ import pandas as pd
 import numpy as np
 
 
-# In[4]:
 
 
-market_path = "./markets.csv"
-
-market_data = pd.read_csv(market_path)
+client = boto3.client('s3', aws_access_key_id = '', aws_secret_access_key = '')
+bucket = 'voicefinder-bucket'
+obj3 = client.get_object(Bucket = bucket, Key = 'markets10c.csv')
+market_data = pd.read_csv(io.BytesIO(obj3['Body'].read())) 
 market_data['market_id'] = market_data['market_id'].astype(int)
 
 
